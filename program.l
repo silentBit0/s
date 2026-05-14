@@ -6,28 +6,23 @@ FILE *yyin;
 
 %%
 
-(if|else|while|switch|for|return|int|float|char)
-{
+(if|else|while|switch|for|return|int|float|char) {
     printf("Keyword: %s\n", yytext);
 }
 
-[a-zA-Z_][a-zA-Z0-9_]*
-{
+[a-zA-Z_][a-zA-Z0-9_]* {
     printf("Identifier: %s\n", yytext);
 }
 
-[0-9]+
-{
+[0-9]+ {
     printf("Integer: %s\n", yytext);
 }
 
-[+\-*/=]
-{
+[+\-*/=] {
     printf("Operator: %s\n", yytext);
 }
 
-[{}();><]
-{
+[{}();><] {
     printf("Special Symbol: %s\n", yytext);
 }
 
@@ -35,12 +30,10 @@ FILE *yyin;
 
 %%
 
-int main()
-{
+int main() {
     yyin = fopen("input.c", "r");
 
-    if(yyin == NULL)
-    {
+    if(yyin == NULL) {
         printf("Cannot open file\n");
         return 1;
     }
@@ -52,11 +45,6 @@ int main()
     return 0;
 }
 
-int yywrap()
-{
+int yywrap() {
     return 1;
 }
-
-flex program.l
-gcc lex.yy.c -lfl -o lexer
-./lexer
