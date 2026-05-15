@@ -37,13 +37,12 @@ productions = {
 }
 
 input_string = input("Enter input string: ")
-
 if input_string[-1] != '$':
     input_string += '$'
 
 stack = [0]
 pointer = 0
-print("STACK\t\tINPUT\t\tACTION")
+print(f"{'STACK':<30}{'INPUT':<20}{'ACTION'}")
 
 while True:
     state = stack[-1]
@@ -52,14 +51,14 @@ while True:
     remaining = input_string[pointer:]
 
     if (state, curr) not in action:
-        print(stack_str, "\t", remaining, "\tERROR")
+        print(f"{stack_str:<30}{remaining:<20}ERROR")
         print("\nSTRING REJECTED")
         break
 
     act = action[(state, curr)]
     if act[0] == 'S':
         next_state = int(act[1:])
-        print(stack_str, "\t", remaining, "\tSHIFT", next_state)
+        print(f"{stack_str:<30}{remaining:<20}SHIFT {next_state}")
         stack.append(curr)
         stack.append(next_state)
         pointer += 1
@@ -67,7 +66,7 @@ while True:
     elif act[0] == 'R':
         prod_num = int(act[1:])
         left, right = productions[prod_num]
-        print(stack_str, "\t", remaining, "\tREDUCE", left, "->", right)
+        print(f"{stack_str:<30}{remaining:<20}REDUCE {left} -> {right}")
         pop_length = len(right) * 2
 
         for i in range(pop_length):
@@ -78,6 +77,6 @@ while True:
         stack.append(goto[(top_state, left)])
 
     elif act == 'ACC':
-        print(stack_str, "\t", remaining, "\tACCEPT")
+        print(f"{stack_str:<30}{remaining:<20}ACCEPT")
         print("\nSTRING ACCEPTED")
         break

@@ -44,6 +44,7 @@ while len(stack) > 0:
     curr = input_str[pointer]
     stack_str = "".join(stack)
     remaining_input = input_str[pointer:]
+
     if top == curr:
         print(f"{stack_str:<20}{remaining_input:<20}Match {curr}")
         stack.pop()
@@ -52,6 +53,7 @@ while len(stack) > 0:
         if top == "$":
             print("\nSTRING ACCEPTED")
             break
+
     elif is_non_terminal(top):
         key = (top, curr)
         if key in table:
@@ -61,10 +63,12 @@ while len(stack) > 0:
             if production != "e":
                 for symbol in reversed(production):
                     stack.append(symbol)
+
         else:
             print(f"{stack_str:<20}{remaining_input:<20}ERROR")
             print("STRING REJECTED")
             break
+
     else:
         print(f"{stack_str:<20}{remaining_input:<20}ERROR")
         print("STRING REJECTED")
